@@ -11,4 +11,5 @@ func RouterInitialisation(server *gin.Engine) {
 	server.Handle("PUT", "/events/:id", updateEvent)
 	server.Handle("DELETE", "/events/:id", deleteEvent)
 	server.Handle("POST", "/signup", signUp)
+	server.Handle("POST", "/login", login)
 }
