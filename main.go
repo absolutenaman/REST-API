@@ -11,6 +11,7 @@ func main() {
 	server := gin.Default()
 	router.RouterInitialisation(server)
 	err := server.Run("localhost:8080")
+	
 	if err != nil {
 		return
 	}
