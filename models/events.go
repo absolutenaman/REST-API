@@ -6,7 +6,7 @@ import (
 )
 
 type Events struct {
-	ID          int64     `json:"id" binding:"required"`
+	ID          int64     `json:"id"`
 	Name        string    `json:"name" binding:"required"`
 	Description string    `json:"description" binding:"required"`
 	Location    string    `json:"location" binding:"required"`

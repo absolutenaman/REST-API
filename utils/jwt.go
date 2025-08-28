@@ -26,7 +26,7 @@ func ValidateToken(token string) error {
 		if ok != true {
 			return false, errors.New("unexpected signing method for token creation")
 		}
-		return secretKey, nil
+		return []byte(secretKey), nil
 	})
 	if err != nil {
 		return errors.New("could not parse token")
