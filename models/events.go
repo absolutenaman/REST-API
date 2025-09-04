@@ -11,6 +11,7 @@ type Events struct {
 	Description string    `json:"description" binding:"required"`
 	Location    string    `json:"location" binding:"required"`
 	DateTime    time.Time `json:"dateTime"`
+	User        int64     `json:"user"`
 }
 
 func GetAllEvents() []Events {
@@ -21,7 +22,7 @@ func GetAllEvents() []Events {
 	var arr []Events
 	for rows.Next() {
 		var event Events
-		err := rows.Scan(&event.ID, &event.Name, &event.Description, &event.Location, &event.DateTime)
+		err := rows.Scan(&event.ID, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.User)
 		if err != nil {
 			panic(err)
 		}
@@ -30,9 +31,9 @@ func GetAllEvents() []Events {
 	defer rows.Close()
 	return arr
 }
-func (e Events) Sava() {
-	insertQuery := `INSERT INTO events (name,description,location,dateTime) VALUES (?,?,?,?)`
-	res, err := DB.DB.Exec(insertQuery, e.Name, e.Description, e.Location, e.DateTime)
+func (e *Events) Sava() {
+	insertQuery := `INSERT INTO events (name,description,location,dateTime,userId) VALUES (?,?,?,?,?)`
+	res, err := DB.DB.Exec(insertQuery, e.Name, e.Description, e.Location, e.DateTime, e.User)
 	if err != nil {
 		panic(err)
 	}
@@ -50,14 +51,14 @@ func GetAllEventsById(id int64) (Events, error) {
 	}
 	for rows.Next() {
 
-		err := rows.Scan(&e.ID, &e.Name, &e.Description, &e.Location, &e.DateTime)
+		err := rows.Scan(&e.ID, &e.Name, &e.Description, &e.Location, &e.DateTime, &e.User)
 		if err != nil {
 			return e, err
 		}
 	}
 	return e, nil
 }
-func (e Events) UpdateEvent() error {
+func (e *Events) UpdateEvent() error {
 	query := `UPDATE events SET name=?,description=?,location=?,dateTime=? WHERE id=?`
 	_, err := DB.DB.Exec(query, e.Name, e.Description, e.Location, e.DateTime, e.ID)
 	if err != nil {
@@ -65,7 +66,7 @@ func (e Events) UpdateEvent() error {
 	}
 	return nil
 }
-func (e Events) DeleteEvent() error {
+func (e *Events) DeleteEvent() error {
 	query := `DELETE FROM EVENTS WHERE id=?`
 	_, err := DB.DB.Exec(query, e.ID)
 	if err != nil {

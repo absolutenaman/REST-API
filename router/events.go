@@ -1,6 +1,7 @@
 package router
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"rest-api/models"
@@ -23,10 +24,14 @@ func getEvent(context *gin.Context) {
 	context.JSON(http.StatusOK, allEventsByTheId)
 }
 func createEvent(context *gin.Context) {
+	userId := context.GetInt64("userId")
 	var event models.Events
 	err := context.ShouldBindJSON(&event)
+	fmt.Println("!!! event.User = userId", userId)
+	event.User = userId
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse the request"})
+		context.JSON(http.StatusBadRequest, gin.H{"message": err})
+		return
 	}
 	event.Sava()
 	context.JSON(http.StatusOK, gin.H{"message": "Event created succesfully", "event": event})

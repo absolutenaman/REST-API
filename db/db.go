@@ -35,7 +35,8 @@ func createTable() {
     description TEXT NOT NULL ,
     location    TEXT NOT NULL ,
     dateTime    DATETIME NOT NULL ,
-    FOREIGN KEY(id) REFERENCES users(id)
+    userId INTEGER NOT NULL ,
+    FOREIGN KEY(userId) REFERENCES users(id)
 )`
 
 	_, err = DB.Exec(createTableQuery)

@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"fmt"
 	"rest-api/db"
 	"rest-api/utils"
@@ -12,7 +13,7 @@ type User struct {
 	Password string `binding:"required" json:"password"`
 }
 
-func (u User) AddUser() error {
+func (u *User) AddUser() error {
 	addQuery := `INSERT INTO users (email,password) VALUES (?,?)`
 	hashedPassword, err := utils.HashPassword(u.Password)
 	if err != nil {
@@ -25,7 +26,7 @@ func (u User) AddUser() error {
 	u.Id, _ = resultedRow.LastInsertId()
 	return nil
 }
-func (u User) ValidateUser() error {
+func (u *User) ValidateUser() error {
 	getUserQuery := `SELECT * FROM users WHERE EMAIL=?`
 	row, err := db.DB.Query(getUserQuery, u.Email)
 	if err != nil {
@@ -37,6 +38,9 @@ func (u User) ValidateUser() error {
 		err = row.Scan(&user.Id, &user.Email, &user.Password)
 	}
 	u.Id = user.Id
+	if user.Password == "" {
+		return errors.New("failed")
+	}
 	if err != nil {
 		fmt.Println("err2", err)
 		return err
