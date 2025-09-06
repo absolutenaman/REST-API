@@ -41,12 +41,9 @@ func ValidateToken(token string) (int64, error) {
 		return 0, errors.New("invalid token claims")
 	}
 
-	fmt.Println("!!! All claims:", claims)
-
 	idFloat, ok := claims["id"].(float64)
 	if !ok {
 		return 0, errors.New("id not found or invalid type in claims")
 	}
-	fmt.Println("!!! idFloat", int64(idFloat))
 	return int64(idFloat), nil
 }

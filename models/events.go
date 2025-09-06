@@ -44,17 +44,11 @@ func (e *Events) Sava() {
 // incase of get request it will be a function
 func GetAllEventsById(id int64) (Events, error) {
 	selectQuery := `SELECT * FROM events WHERE ID =(?)`
-	rows, err := DB.DB.Query(selectQuery, id)
+	rows := DB.DB.QueryRow(selectQuery, id)
 	var e Events
+	err := rows.Scan(&e.ID, &e.Name, &e.Description, &e.Location, &e.DateTime, &e.User)
 	if err != nil {
 		return e, err
-	}
-	for rows.Next() {
-
-		err := rows.Scan(&e.ID, &e.Name, &e.Description, &e.Location, &e.DateTime, &e.User)
-		if err != nil {
-			return e, err
-		}
 	}
 	return e, nil
 }
