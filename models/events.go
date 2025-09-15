@@ -14,12 +14,13 @@ type Events struct {
 	User        int64     `json:"user"`
 }
 
+var arr []Events
+
 func GetAllEvents() []Events {
 	rows, err := DB.DB.Query(`SELECT * FROM events`)
 	if err != nil {
 		panic(err)
 	}
-	var arr []Events
 	for rows.Next() {
 		var event Events
 		err := rows.Scan(&event.ID, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.User)

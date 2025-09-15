@@ -1,13 +1,25 @@
 package router
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"rest-api/models"
 	"strconv"
 )
 
+//go:generate mockgen -source=events.go -destination=../mocks/mock_events.go -package=mocks
+type EventsService interface {
+	GetAllEventsById(event *models.Events) (models.Events, error)
+}
+type EventsHandler struct {
+	eventsService EventsService
+}
+
+func NewEventsHandler(service EventsService) *EventsHandler {
+	return &EventsHandler{
+		eventsService: service,
+	}
+}
 func getEvents(context *gin.Context) {
 	events := models.GetAllEvents()
 	context.JSON(http.StatusOK, events)
@@ -27,7 +39,6 @@ func createEvent(context *gin.Context) {
 	userId := context.GetInt64("userId")
 	var event models.Events
 	err := context.ShouldBindJSON(&event)
-	fmt.Println("!!! event.User = userId", userId)
 	event.User = userId
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"message": err})
