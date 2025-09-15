@@ -1,4 +1,4 @@
-package router_test
+package router
 
 import (
 	"errors"
@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"rest-api/mocks"
-	"rest-api/router"
 	"strings"
 	"testing"
 )
@@ -21,7 +20,7 @@ func TestSignUp_Success(t *testing.T) {
 	defer ctrl.Finish()
 	mockUtil := mocks.NewMockUtil(ctrl)
 	mockUserService := mocks.NewMockUserService(ctrl)
-	handler := router.NewUserHandler(mockUserService, mockUtil)
+	handler := NewUserHandler(mockUserService, mockUtil)
 	//mockUtil.EXPECT().TokenGeneration(gomock.Any(), gomock.Any()).Return("sdfsf", nil)
 	mockUserService.EXPECT().
 		AddUser(gomock.Any()).
@@ -49,7 +48,7 @@ func TestLogin_Success(t *testing.T) {
 	defer ctrl.Finish()
 	mockUtil := mocks.NewMockUtil(ctrl)
 	mockUserService := mocks.NewMockUserService(ctrl)
-	handler := router.NewUserHandler(mockUserService, mockUtil)
+	handler := NewUserHandler(mockUserService, mockUtil)
 	mockUserService.EXPECT().
 		ValidateUser(gomock.Any()).
 		Return(nil)
@@ -78,7 +77,7 @@ func TestLogin_BadRequest(t *testing.T) {
 	defer ctrl.Finish()
 	mockUtil := mocks.NewMockUtil(ctrl)
 	mockUserService := mocks.NewMockUserService(ctrl)
-	handler := router.NewUserHandler(mockUserService, mockUtil)
+	handler := NewUserHandler(mockUserService, mockUtil)
 	mockUtil.EXPECT().TokenGeneration(gomock.Any(), gomock.Any()).Return("sdfsf", nil)
 	mockUserService.EXPECT().
 		ValidateUser(gomock.Any()).
@@ -106,7 +105,7 @@ func TestLogin_Unauthorised(t *testing.T) {
 	defer ctrl.Finish()
 	mockUtil := mocks.NewMockUtil(ctrl)
 	mockUserService := mocks.NewMockUserService(ctrl)
-	handler := router.NewUserHandler(mockUserService, mockUtil)
+	handler := NewUserHandler(mockUserService, mockUtil)
 	mockUserService.EXPECT().
 		ValidateUser(gomock.Any()).
 		Return(nil)
@@ -136,7 +135,7 @@ func TestSignUp_BadRequest(t *testing.T) {
 	defer ctrl.Finish()
 	mockUtil := mocks.NewMockUtil(ctrl)
 	mockUserService := mocks.NewMockUserService(ctrl)
-	handler := router.NewUserHandler(mockUserService, mockUtil)
+	handler := NewUserHandler(mockUserService, mockUtil)
 	//mockUtil.EXPECT().TokenGeneration(gomock.Any(), gomock.Any()).Return("sdfsf", nil)
 	mockUserService.EXPECT().
 		AddUser(gomock.Any()).
@@ -165,7 +164,7 @@ func TestSignUp_Unauthorised(t *testing.T) {
 	defer ctrl.Finish()
 	mockUtil := mocks.NewMockUtil(ctrl)
 	mockUserService := mocks.NewMockUserService(ctrl)
-	handler := router.NewUserHandler(mockUserService, mockUtil)
+	handler := NewUserHandler(mockUserService, mockUtil)
 	//mockUtil.EXPECT().TokenGeneration(gomock.Any(), gomock.Any()).Return("sdfsf", nil)
 
 	mockUserService.EXPECT().
@@ -193,7 +192,7 @@ func TestLogin_FailureTokenValidation(t *testing.T) {
 
 	mockUserService := mocks.NewMockUserService(ctrl)
 	mockUtil := mocks.NewMockUtil(ctrl)
-	handler := router.NewUserHandler(mockUserService, mockUtil)
+	handler := NewUserHandler(mockUserService, mockUtil)
 
 	mockUserService.EXPECT().
 		ValidateUser(gomock.Any()).
@@ -222,7 +221,7 @@ func TestLogin_FailureValidationFails(t *testing.T) {
 
 	mockUserService := mocks.NewMockUserService(ctrl)
 	mockUtil := mocks.NewMockUtil(ctrl)
-	handler := router.NewUserHandler(mockUserService, mockUtil)
+	handler := NewUserHandler(mockUserService, mockUtil)
 	mockUserService.EXPECT().
 		ValidateUser(gomock.Any()).
 		Return(errors.New("Error"))

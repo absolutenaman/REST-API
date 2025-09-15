@@ -29,22 +29,25 @@ type EventsImpl struct {
 func (e *EventsImpl) GetAllEventsById(id int64) (models.Events, error) {
 	return models.GetAllEventsById(id)
 }
+func (e *EventsImpl) Save(event models.Events) {
+	event.Sava()
+}
 
 func RouterInitialisation(server *gin.Engine) {
-	authenticate := server.Group("/")
-	authenticate.Use(middlewares.Authenticate)
-	authenticate.POST("/events", createEvent)
-	authenticate.PUT("/events/:id", updateEvent)
-	authenticate.DELETE("/events/:id", deleteEvent)
-	authenticate.POST("/events/:id/register", registerForEvent)
-	authenticate.DELETE("/events/:id/register", cancellationForEvent)
+	eventsService := &EventsImpl{}
 	userService := &UserServiceImpl{}
 	utilService := &UtilImpl{}
 	h := NewUserHandler(userService, utilService)
-	eventsService := &EventsImpl{}
 	e := NewEventsHandler(eventsService)
+	authenticate := server.Group("/")
+	authenticate.Use(middlewares.Authenticate)
+	authenticate.POST("/events", e.createEvent)
+	authenticate.PUT("/events/:id", e.updateEvent)
+	authenticate.DELETE("/events/:id", e.deleteEvent)
+	authenticate.POST("/events/:id/register", registerForEvent)
+	authenticate.DELETE("/events/:id/register", cancellationForEvent)
 	server.Handle("GET", "/events", getEvents)
-	server.Handle("GET", "/events/:id", getEvent)
+	server.Handle("GET", "/events/:id", e.getEvent)
 	server.Handle("POST", "/signup", h.SignUp)
 	server.Handle("POST", "/login", h.Login)
 }

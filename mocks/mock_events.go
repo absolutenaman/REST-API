@@ -3,3 +3,60 @@
 
 // Package mocks is a generated GoMock package.
 package mocks
+
+import (
+	reflect "reflect"
+	models "rest-api/models"
+
+	gomock "github.com/golang/mock/gomock"
+)
+
+// MockEventsService is a mock of EventsService interface.
+type MockEventsService struct {
+	ctrl     *gomock.Controller
+	recorder *MockEventsServiceMockRecorder
+}
+
+// MockEventsServiceMockRecorder is the mock recorder for MockEventsService.
+type MockEventsServiceMockRecorder struct {
+	mock *MockEventsService
+}
+
+// NewMockEventsService creates a new mock instance.
+func NewMockEventsService(ctrl *gomock.Controller) *MockEventsService {
+	mock := &MockEventsService{ctrl: ctrl}
+	mock.recorder = &MockEventsServiceMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockEventsService) EXPECT() *MockEventsServiceMockRecorder {
+	return m.recorder
+}
+
+// GetAllEventsById mocks base method.
+func (m *MockEventsService) GetAllEventsById(id int64) (models.Events, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAllEventsById", id)
+	ret0, _ := ret[0].(models.Events)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAllEventsById indicates an expected call of GetAllEventsById.
+func (mr *MockEventsServiceMockRecorder) GetAllEventsById(id interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllEventsById", reflect.TypeOf((*MockEventsService)(nil).GetAllEventsById), id)
+}
+
+// Save mocks base method.
+func (m *MockEventsService) Save(events models.Events) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "Save", events)
+}
+
+// Save indicates an expected call of Save.
+func (mr *MockEventsServiceMockRecorder) Save(events interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockEventsService)(nil).Save), events)
+}

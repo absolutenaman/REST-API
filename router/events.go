@@ -9,7 +9,8 @@ import (
 
 //go:generate mockgen -source=events.go -destination=../mocks/mock_events.go -package=mocks
 type EventsService interface {
-	GetAllEventsById(event *models.Events) (models.Events, error)
+	GetAllEventsById(id int64) (models.Events, error)
+	Save(events models.Events)
 }
 type EventsHandler struct {
 	eventsService EventsService
@@ -24,18 +25,18 @@ func getEvents(context *gin.Context) {
 	events := models.GetAllEvents()
 	context.JSON(http.StatusOK, events)
 }
-func getEvent(context *gin.Context) {
+func (h *EventsHandler) getEvent(context *gin.Context) {
 	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"err": err})
 	}
-	allEventsByTheId, err := models.GetAllEventsById(id)
+	allEventsByTheId, err := h.eventsService.GetAllEventsById(id)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"err": err})
 	}
 	context.JSON(http.StatusOK, allEventsByTheId)
 }
-func createEvent(context *gin.Context) {
+func (h *EventsHandler) createEvent(context *gin.Context) {
 	userId := context.GetInt64("userId")
 	var event models.Events
 	err := context.ShouldBindJSON(&event)
@@ -44,17 +45,16 @@ func createEvent(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"message": err})
 		return
 	}
-	event.Sava()
+	h.eventsService.Save(event)
 	context.JSON(http.StatusOK, gin.H{"message": "Event created succesfully", "event": event})
-
 }
 
-func updateEvent(context *gin.Context) {
+func (h *EventsHandler) updateEvent(context *gin.Context) {
 	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"err": err})
 	}
-	allEventByTheId, err := models.GetAllEventsById(id)
+	allEventByTheId, err := h.eventsService.GetAllEventsById(id)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"err": err})
 	}
@@ -71,12 +71,12 @@ func updateEvent(context *gin.Context) {
 	}
 	context.JSON(http.StatusOK, gin.H{"message": "Event updated successfully"})
 }
-func deleteEvent(context *gin.Context) {
+func (h *EventsHandler) deleteEvent(context *gin.Context) {
 	id, err := strconv.ParseInt(context.Param("id"), 10, 64)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"err": err})
 	}
-	allEventByTheId, err := models.GetAllEventsById(id)
+	allEventByTheId, err := h.eventsService.GetAllEventsById(id)
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"err": err})
 	}
