@@ -71,7 +71,7 @@
 				
 				<option value="file7">rest-api/models/user.go (0.0%)</option>
 				
-				<option value="file8">rest-api/router/events.go (17.4%)</option>
+				<option value="file8">rest-api/router/events.go (21.7%)</option>
 				
 				<option value="file9">rest-api/router/registration.go (0.0%)</option>
 				
@@ -555,8 +555,8 @@ func (h *EventsHandler) createEvent(context *gin.Context) <span class="cov8" tit
         var event models.Events
         err := context.ShouldBindJSON(&amp;event)
         event.User = userId
-        if err != nil </span><span class="cov0" title="0">{
-                context.JSON(http.StatusBadRequest, gin.H{"message": err})
+        if err != nil </span><span class="cov8" title="1">{
+                context.JSON(http.StatusBadRequest, gin.H{"message": "Bad Request"})
                 return
         }</span>
         <span class="cov8" title="1">h.eventsService.Save(event)

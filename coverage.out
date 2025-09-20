@@ -1,9 +1,4 @@
 mode: set
-rest-api/middlewares/auth.go:9.41,11.17 2 0
-rest-api/middlewares/auth.go:11.17,14.3 2 0
-rest-api/middlewares/auth.go:15.2,16.16 2 0
-rest-api/middlewares/auth.go:16.16,19.3 2 0
-rest-api/middlewares/auth.go:20.2,21.16 2 0
 rest-api/mocks/mock_events.go:26.71,30.2 3 0
 rest-api/mocks/mock_events.go:33.69,35.2 1 0
 rest-api/mocks/mock_events.go:38.79,44.2 5 0
@@ -20,6 +15,18 @@ rest-api/mocks/mock_user.go:77.53,81.2 3 0
 rest-api/mocks/mock_user.go:84.51,86.2 1 0
 rest-api/mocks/mock_user.go:89.76,95.2 5 0
 rest-api/mocks/mock_user.go:98.85,101.2 2 0
+rest-api/db/db.go:11.15,13.16 2 0
+rest-api/db/db.go:13.16,14.36 1 0
+rest-api/db/db.go:16.2,18.15 3 0
+rest-api/db/db.go:21.20,28.16 3 0
+rest-api/db/db.go:28.16,29.13 1 0
+rest-api/db/db.go:32.2,43.16 3 0
+rest-api/db/db.go:43.16,44.13 1 0
+rest-api/middlewares/auth.go:9.41,11.17 2 0
+rest-api/middlewares/auth.go:11.17,14.3 2 0
+rest-api/middlewares/auth.go:15.2,16.16 2 0
+rest-api/middlewares/auth.go:16.16,19.3 2 0
+rest-api/middlewares/auth.go:20.2,21.16 2 0
 rest-api/main.go:9.13,15.16 5 0
 rest-api/main.go:15.16,17.3 1 0
 rest-api/models/events.go:19.30,21.16 2 0
@@ -63,13 +70,6 @@ rest-api/models/user.go:44.16,47.3 2 0
 rest-api/models/user.go:48.2,49.16 2 0
 rest-api/models/user.go:49.16,52.3 2 0
 rest-api/models/user.go:53.2,53.12 1 0
-rest-api/db/db.go:11.15,13.16 2 0
-rest-api/db/db.go:13.16,14.36 1 0
-rest-api/db/db.go:16.2,18.15 3 0
-rest-api/db/db.go:21.20,28.16 3 0
-rest-api/db/db.go:28.16,29.13 1 0
-rest-api/db/db.go:32.2,43.16 3 0
-rest-api/db/db.go:43.16,44.13 1 0
 rest-api/utils/jwt.go:11.62,18.16 3 0
 rest-api/utils/jwt.go:18.16,20.3 1 0
 rest-api/utils/jwt.go:21.2,21.26 1 0
@@ -169,7 +169,7 @@ rest-api/router/events.go:33.2,34.16 2 0
 rest-api/router/events.go:34.16,36.3 1 0
 rest-api/router/events.go:37.2,37.47 1 0
 rest-api/router/events.go:39.59,44.16 5 1
-rest-api/router/events.go:44.16,47.3 2 0
+rest-api/router/events.go:44.16,47.3 2 1
 rest-api/router/events.go:48.2,49.92 2 1
 rest-api/router/events.go:52.59,54.16 2 0
 rest-api/router/events.go:54.16,56.3 1 0

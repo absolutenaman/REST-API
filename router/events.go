@@ -42,7 +42,7 @@ func (h *EventsHandler) createEvent(context *gin.Context) {
 	err := context.ShouldBindJSON(&event)
 	event.User = userId
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": err})
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Bad Request"})
 		return
 	}
 	h.eventsService.Save(event)
@@ -59,7 +59,6 @@ func (h *EventsHandler) updateEvent(context *gin.Context) {
 		context.JSON(http.StatusInternalServerError, gin.H{"err": err})
 	}
 	var updatedEvent models.Events
-
 	updatedEvent.ID = allEventByTheId.ID
 	err = context.ShouldBindJSON(&updatedEvent)
 	if err != nil {
