@@ -1,11 +1,17 @@
 package router
 
 import (
-	"github.com/gin-gonic/gin"
 	"net/http"
 	"rest-api/models"
 	"strconv"
+
+	"github.com/gin-gonic/gin"
 )
+
+//go:generate mockgen -source=registration.go -destination=../mocks/mock_registration.go -package=mocks
+type model interface {
+	models.Registrations
+}
 
 func registerForEvent(context *gin.Context) {
 	eventId := context.Param("id")
