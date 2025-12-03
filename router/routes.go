@@ -33,21 +33,25 @@ func (e *EventsImpl) Save(event models.Events) {
 	event.Sava()
 }
 
+type RegistrationsImpl struct {
+}
+
 func RouterInitialisation(server *gin.Engine) {
 	eventsService := &EventsImpl{}
 	userService := &UserServiceImpl{}
 	utilService := &UtilImpl{}
-	h := NewUserHandler(userService, utilService)
-	e := NewEventsHandler(eventsService)
+
+	userHandler := NewUserHandler(userService, utilService)
+	eventHandler := NewEventsHandler(eventsService)
 	authenticate := server.Group("/")
 	authenticate.Use(middlewares.Authenticate)
-	authenticate.POST("/events", e.createEvent)
-	authenticate.PUT("/events/:id", e.updateEvent)
-	authenticate.DELETE("/events/:id", e.deleteEvent)
+	authenticate.POST("/events", eventHandler.createEvent)
+	authenticate.PUT("/events/:id", eventHandler.updateEvent)
+	authenticate.DELETE("/events/:id", eventHandler.deleteEvent)
 	authenticate.POST("/events/:id/register", registerForEvent)
 	authenticate.DELETE("/events/:id/register", cancellationForEvent)
 	server.Handle("GET", "/events", getEvents)
-	server.Handle("GET", "/events/:id", e.getEvent)
-	server.Handle("POST", "/signup", h.SignUp)
-	server.Handle("POST", "/login", h.Login)
+	server.Handle("GET", "/events/:id", eventHandler.getEvent)
+	server.Handle("POST", "/signup", userHandler.SignUp)
+	server.Handle("POST", "/login", userHandler.Login)
 }

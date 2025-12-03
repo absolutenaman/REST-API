@@ -3,3 +3,75 @@
 
 // Package mocks is a generated GoMock package.
 package mocks
+
+import (
+	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
+)
+
+// MockEventService is a mock of EventService interface.
+type MockEventService struct {
+	ctrl     *gomock.Controller
+	recorder *MockEventServiceMockRecorder
+}
+
+// MockEventServiceMockRecorder is the mock recorder for MockEventService.
+type MockEventServiceMockRecorder struct {
+	mock *MockEventService
+}
+
+// NewMockEventService creates a new mock instance.
+func NewMockEventService(ctrl *gomock.Controller) *MockEventService {
+	mock := &MockEventService{ctrl: ctrl}
+	mock.recorder = &MockEventServiceMockRecorder{mock}
+	return mock
+}
+
+// EXPECT returns an object that allows the caller to indicate expected use.
+func (m *MockEventService) EXPECT() *MockEventServiceMockRecorder {
+	return m.recorder
+}
+
+// Cancellation mocks base method.
+func (m *MockEventService) Cancellation(userId, eventId int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Cancellation", userId, eventId)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Cancellation indicates an expected call of Cancellation.
+func (mr *MockEventServiceMockRecorder) Cancellation(userId, eventId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Cancellation", reflect.TypeOf((*MockEventService)(nil).Cancellation), userId, eventId)
+}
+
+// GetAllEventsById mocks base method.
+func (m *MockEventService) GetAllEventsById(userId int64) (interface{}, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAllEventsById", userId)
+	ret0, _ := ret[0].(interface{})
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAllEventsById indicates an expected call of GetAllEventsById.
+func (mr *MockEventServiceMockRecorder) GetAllEventsById(userId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAllEventsById", reflect.TypeOf((*MockEventService)(nil).GetAllEventsById), userId)
+}
+
+// Register mocks base method.
+func (m *MockEventService) Register(userId, eventId int64) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Register", userId, eventId)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Register indicates an expected call of Register.
+func (mr *MockEventServiceMockRecorder) Register(userId, eventId interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Register", reflect.TypeOf((*MockEventService)(nil).Register), userId, eventId)
+}
